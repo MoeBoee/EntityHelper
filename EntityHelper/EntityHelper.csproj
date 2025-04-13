@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB_Migrate.cs" />
     <Compile Include="EntityDerivate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -9,6 +9,9 @@ namespace EntityHelper
 {
     /// <summary>
     /// DB_Migrate is an Tool to Udpdate an DB in DB-First Environments
+    /// Example:
+    /// var c = new DB_Migrate(dbContext);
+    /// c.Up(0, 1, "SQL Update");
     /// </summary>
     public class DB_Migrate
     {
@@ -18,6 +21,8 @@ namespace EntityHelper
         /// <param name="dbContext"></param>
         public DB_Migrate(DbContext dbContext)
         {
+
+            
 
             DbContext = dbContext;
             init();
