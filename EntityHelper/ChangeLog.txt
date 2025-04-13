@@ -1,0 +1,7 @@
+# Versionshinweise - EntityHelper - V1.1.0
+
+### Task
+
+[ENHE-1](https://hoomoe.atlassian.net/browse/ENHE-1) DB\_Migrate von KKM\_BookingManager in das Projekt migrieren
+
+[ENHE-2](https://hoomoe.atlassian.net/browse/ENHE-2) Update .net Framework Version to 4.7.2
