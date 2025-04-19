@@ -129,8 +129,16 @@ namespace EntityHelper
                     //Ein glöschte Entity, die Added war wurde nie in der DB gespeichert und kann somit auch nicht aus der DB gelöscht werden!
                 } else
                 {
-                    context.Entry(Entity).State = State;
-                    context.SaveChanges();
+                    try
+                    {
+                        context.Entry(Entity).State = State;
+                        context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw new Exception($"Fehler beim Speichern einer Entität: Type {Entity.GetType().ToString()}", ex);
+                    }
 
                     //bei ADDED ändert sich nach dem speichern 
                     NotifyPropertyChanged(PrimaryKeyName);
