@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,48 @@ namespace EntityHelper
                 {
                     try
                     {
+                        var splits = Statement.Split(new string[] { "GO" }, StringSplitOptions.None);
+                        foreach (var split in splits)
+                        {
+                            if (!string.IsNullOrEmpty(split)) c.Database.ExecuteSqlCommand(split);
+                        }
+
+                        //c.Database.ExecuteSqlCommand("DELETE FROM tbl_person WHERE Id = @p0", 5);
+                        SetDBVersion(NewVersion);
+                        dbContextTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            dbContextTransaction.Rollback();
+                        }
+                        catch { }
+
+                        SetDBVersion(Version);
+                        throw new Exception($"DBMigration to Version {NewVersion} failed", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Store SQL Statement as Files
+        /// </summary>
+        /// <param name="Version"></param>
+        /// <param name="NewVersion"></param>
+        /// <exception cref="Exception"></exception>
+        public void Up(int Version, int NewVersion)
+        {
+            using (DbContext c = DbContext)
+            {
+                if (Version != GetDBVersion()) return;
+                using (var dbContextTransaction = c.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var dir = AppDomain.CurrentDomain.BaseDirectory;
+                        var Statement = File.ReadAllText($"{dir}\\{NewVersion}.sql" );
                         var splits = Statement.Split(new string[] { "GO" }, StringSplitOptions.None);
                         foreach (var split in splits)
                         {
