@@ -94,7 +94,7 @@ namespace EntityHelper
                     {
 
                         var exsists = c.Database.SqlQuery<bool>($"DECLARE @TableExists BIT;\r\n\r\nIF EXISTS (\r\n    SELECT 1\r\n    FROM INFORMATION_SCHEMA.TABLES\r\n    WHERE TABLE_SCHEMA = 'dbo'\r\n      AND TABLE_NAME = 'tbl_dbVersion'\r\n)\r\nBEGIN\r\n    SET @TableExists = 1;\r\nEND\r\nELSE\r\nBEGIN\r\n    SET @TableExists = 0;\r\nEND\r\n\r\nSELECT @TableExists AS TableExists;").First();
-                        if (!exsists) c.Database.ExecuteSqlCommand("CREATE TABLE [dbo].[tbl_dbVersion](\r\n\t[contextName] [nvarchar](50) NOT NULL,\r\n\t[version] [int](50) NOT NULL,\r\n CONSTRAINT [PK_tbl_dbVersion] PRIMARY KEY CLUSTERED \r\n(\r\n\t[contextName] ASC\r\n)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]\r\n) ON [PRIMARY]");
+                        if (!exsists) c.Database.ExecuteSqlCommand("CREATE TABLE [dbo].[tbl_dbVersion](\r\n\t[contextName] [nvarchar](50) NOT NULL,\r\n\t[version] [int] NOT NULL,\r\n CONSTRAINT [PK_tbl_dbVersion] PRIMARY KEY CLUSTERED \r\n(\r\n\t[contextName] ASC\r\n)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]\r\n) ON [PRIMARY]");
                         //c.Database.ExecuteSqlCommand("DELETE FROM tbl_person WHERE Id = @p0", 5);
 
                         dbContextTransaction.Commit();
