@@ -98,6 +98,7 @@ namespace EntityHelper
                         //c.Database.ExecuteSqlCommand("DELETE FROM tbl_person WHERE Id = @p0", 5);
 
                         dbContextTransaction.Commit();
+                        SetDBVersion(0);
                     }
                     catch (Exception ex)
                     {
